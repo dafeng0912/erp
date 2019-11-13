@@ -13,7 +13,7 @@
 		http://www.springframework.org/schema/aop/spring-aop.xsd
 		">  
 	
-	<bean id="depAction" class="cn.itcast.erp.action.DepAction" scope="prototype">
+	<bean id="depAction" class="com.dafeng.erp.action.dep.DepAction" scope="prototype">
 		<property name="depBiz" ref="depBiz"></property>
 	</bean>
 

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../ui/layui/css/layui.css" media="all">
+
+</head>
+<body>
+  <form id="searchForm" class="layui-form">
+    <div style="height: 2px;"></div>
+    <table>
+      <tr>
+        <td>部门名称</td>
+        <td><input name="dep.name"/></td>
+        <td>联系方式</td>
+        <td><input name="dep.tele"/></td>
+        <td>
+        <button id="btnSearch" type="button">查询</button>
+       </td>
+    </tr>
+    </table>
+    <div style="height: 2px;"></div>
+  </form>
+  <table id="dep" lay-filter="test"></table>
+</body>
+<script type="text/javascript" src="../../ui/plugin/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../../ui/layui/layui.js"></script>
+<script type="text/javascript" src="../../ui/plugin/jquery.serializejson.js"></script>
+<script>
+  layui.use(['element','table','laypage'], function(){
+  var element = layui.element;
+  var table = layui.table;
+  var laypage = layui.laypage;
+  
+  /**
+   * 设置分页
+   * 
+   *
+   */
+  // laypage.render({
+  //   elem: 'dep' //注意，获取id不用加 # 号
+  //   ,count: 50 //数据总数，从服务端得到
+  //   ,limit: 10    //每页显示的条数
+  //   ,limits: [5, 10, 20, 30, 40, 50]
+  //   , jump: function(obj, first){   
+  //   //obj包含了当前分页的所有参数，比如：
+  //   console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+  //   console.log(obj.limit); //得到每页显示的条数
+    
+  //   //首次不执行
+  //   if(!first){
+  //     //do something
+  //   }
+  // }
+  // });
+
+  /**
+   * 条件查询语句
+   *  layui提供的异步表格重载
+   */ 
+  $('#btnSearch').bind('click',function(){
+    var formData = $('#searchForm').serializeJSON(); 
+    // alert(JSON.stringify(formData));
+    // 数据重载
+    table.reload('dep', {
+      url: 'dep_search'
+      ,where: formData
+    });
+  });
+
+  /* 
+   * 表格初始化渲染
+   */
+  table.render({
+    elem: '#dep'
+    ,height: 600
+    ,skin: 'line' //行边框风格
+    ,size: 'sm' //小尺寸的表格
+    ,url:'/erp/dep_list' //数据接口
+    ,loading:true //分页时出现加载条
+    ,cols: [[ //表头
+    {field: 'uuid', title: '部门编号', sort: true, fixed: 'left'}
+    ,{field: 'name', title: '部门名称'}
+    ,{field: 'tele', title: '部门电话' }
+    ,{title: '操作' }
+     ]]
+    ,page: true //开启分页
+    ,parseData: function(res){ //res 即为原始返回的数据
+    return {
+      "code": res.code, //解析接口状态
+      "msg": res.msg, //解析提示文本
+      "count": res.count, //解析数据长度
+      "data": res.data //解析数据列表
+    };
+  }
+  });
+  
+});
+</script>
+
+</html>

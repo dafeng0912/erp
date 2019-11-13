@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>ERP管理系统</title>
+  <link rel="shortcut icon" href="#" />
+  <link rel="stylesheet" href="ui/layui/css/layui.css" media="all">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <!-- layui-header 布局头 -->
+  <div class="layui-header">
+    <!-- layui-logo 后台名称 -->
+    <div class="layui-logo" lay-href="home/console.html">
+      <span>ERP管理系统</span>
+    </div>
+    <ul class="alyui-nav layui-layout-left" >
+        <li class="layui-nav-item layui-hide-xs" lay-unselect>
+            <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="template/search.html?keywords="> 
+        </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          管理员
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">基本资料</a></dd>
+          <dd><a href="">修改密码</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="views/login.html" target="_blank">退出</a>
+      </li>
+    </ul>
+  </div>
+  <!-- layui-side 侧边栏 -->
+  <div class="layui-side layui-bg-black" >
+    <!-- layui-side-scroll导航滚轮 -->
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree lay-accordion"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <!--  href="javascript:;" 默认行为，左侧边栏父标题不发生跳转 -->
+          <a href="javascript:;">基础数据</a>
+          <dl class="layui-nav-child">
+            <dd><a href="views/bases_data/dep.html" target="main_self_frame">商品类型</a></dd>
+            <dd><a >商品</a></dd>
+            <dd><a >仓库</a></dd>
+            <dd><a >供应商</a></dd>
+            <dd><a >客户</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">人事管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;">部门</a></dd>
+            <dd><a href="javascript:;">员工</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">采购管理</a>
+          <dl class="layui-nav-child">
+            <dd><a lay-href="views/bases_data/shoptype.html">采购订单查询</a></dd>
+            <dd><a href="javascript:;">采购申请</a></dd>
+            <dd><a href="javascript:;">采购审核</a></dd>
+            <dd><a href="javascript:;">采购确认</a></dd>
+            <dd><a href="javascript:;">采购入库</a></dd>
+            <dd><a href="javascript:;">采购退货查询</a></dd>
+            <dd><a href="javascript:;">采购退货登记</a></dd>
+            <dd><a href="javascript:;">采购退货审核</a></dd>
+            <dd><a href="javascript:;">采购退货出库</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">销售管理</a></li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">库存管理</a>
+          <dl class="layui-nav-child">
+            <dd><a lay-href="views/bases_data/shoptype.html">库存查询</a></dd>
+            <dd><a href="javascript:;">库存变动记录</a></dd>
+            <dd><a href="javascript:;">库存预警</a></dd>
+            <dd><a href="javascript:;">盘盈盘亏等级</a></dd>
+            <dd><a href="javascript:;">盘盈盘亏审核</a></dd>
+            <dd><a href="javascript:;">盘盈盘亏查询</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">统计管理</a>
+          <dl class="layui-nav-child">
+              <dd><a lay-href="views/bases_data/shoptype.html">销售统计表</a></dd>
+              <dd><a href="javascript:;">销售趋势分析</a></dd>
+              <dd><a href="javascript:;">销售退货分析</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">权限管理</a>
+          <dl class="layui-nav-child">
+              <dd><a lay-href="views/bases_data/shoptype.html">重置密码</a></dd>
+              <dd><a href="javascript:;">角色设置</a></dd>
+              <dd><a href="javascript:;">角色权限设置</a></dd>
+              <dd><a href="javascript:;">用户角色设置</a></dd>
+          </dl>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body" id="mian_body">
+    <!-- 内容主体区域 -->
+    <div class="layadmin-tabsbody-item layui-show">
+        <iframe src="views/mianbody.html" name="main_self_frame" frameborder="0" class="layadmin-iframe" width="100%" height="700px"></iframe>
+    </div>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    © layui.com - 大风
+  </div>
+</div>
+<script type="text/javascript" src="ui/layui/layui.js"></script>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+
+</script>
+</body>
+</html>
