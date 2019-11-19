@@ -4,6 +4,7 @@
 <hibernate-mapping>
     <class name="com.dafeng.erp.entity.Dep" table="Dep" >
         <id name="uuid" >
+        <!--  添加序列 -->
         	<generator class="org.hibernate.id.enhanced.SequenceStyleGenerator">
         		<param name="sequence_name">DEP_SEQ</param>
         	</generator>

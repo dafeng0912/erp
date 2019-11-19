@@ -12,7 +12,7 @@ import org.hibernate.criterion.DetachedCriteria;
   * @date 2019年11月13日 上午8:57:16 
   * @version v1.0 
 */
-public interface BaseDao<T> {
+public interface IBaseDao<T> {
 	/**
 	 * 
 	  * @Title: save 
@@ -41,7 +41,7 @@ public interface BaseDao<T> {
 	  * @data  2019年11月13日
 	  * @version v1.0
 	 */
-	public void delete(T t);
+	public void delete(Long uuid);
 	
 	/**
 	  * @Title: findById 
@@ -68,7 +68,7 @@ public interface BaseDao<T> {
 	  * @data  2019年11月13日
 	  * @version v1.0
 	 */
-	public Integer findCount(DetachedCriteria detachedCriteria);
+	public Long findCount(T t1,T t2,Object param);
 	
 	/**
 	  * @Title: findByPage 
@@ -80,5 +80,43 @@ public interface BaseDao<T> {
 	  * @data  2019年11月13日
 	  * @version v1.0
 	 */
-	public List<T> findByPage(DetachedCriteria detachedCriteria,Integer begin,Integer pageSize);
+	public List<T> findByPage(T t1,T t2,Object param,Integer begin,Integer pageSize);
+	
+	/**
+	  * @Title: getList 
+	  * @Description: 条件查询
+	  * @return   List<T>    
+	  * @author  大风
+	  * @data  2019年11月15日
+	  * @version v1.0
+	 */
+	public List<T> getList(T t1,T t2,Object param);
+	
+	/**
+	  * @Title: getListByPage 
+	  * @Description: 条件查询分页查找
+	  * @param t1	泛型，用户自己设置
+	  * @param t2	备用，时间相减的情况下
+	  * @param param
+	  * @param firstResult
+	  * @param maxResults
+	  * @return  List<T>    
+	  * @author  大风
+	  * @data  2019年11月15日
+	  * @version v1.0
+	 */
+	public List<T> getListByPage(T t1,T t2,Object param,int firstResult, int maxResults);
+	
+	/**
+	  * @Title: getDetachedCriteria 
+	  * @Description: 子类实现 
+	  * @param t1
+	  * @param t2
+	  * @param param
+	  * @return DetachedCriteria    
+	  * @author  大风
+	  * @data  2019年11月15日
+	  * @version v1.0
+	 */
+	public DetachedCriteria getDetachedCriteria(T t1, T t2, Object param);
 }

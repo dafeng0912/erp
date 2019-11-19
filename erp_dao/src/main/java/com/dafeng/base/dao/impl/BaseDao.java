@@ -9,7 +9,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
-import com.dafeng.base.dao.BaseDao;
+import com.dafeng.base.dao.IBaseDao;
 
 /**
   * @ClassName: BaseDaoImpl 
@@ -19,7 +19,7 @@ import com.dafeng.base.dao.BaseDao;
   * @version v1.0
   * @param <T>
  */
-public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
+public class BaseDao<T> extends HibernateDaoSupport implements IBaseDao<T> {
 	
 	private Class clazz;
 
@@ -28,7 +28,7 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 	 * 不想子类上有构造方法，必须在父类中提供无参数的构造，在无参构造中获得具体类型的Class。
 	 * 具体类型的Class是参数类型中的实际类型参数。
 	 */
-	public BaseDaoImpl() {
+	public BaseDao() {
 		// 反射：第一步获得Class
 		Class clazz = this.getClass();// 正在被调用那个类的Class,CustomerDaoImpl或者LinkManDaoImpl。
 		// 查看JDK的API
@@ -50,7 +50,8 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		this.getHibernateTemplate().update(t);
 	}
 
-	public void delete(T t) {
+	public void delete(Long uuid) {
+		T t = (T) this.getHibernateTemplate().get(clazz, uuid);
 		this.getHibernateTemplate().delete(t);
 	}
 
@@ -64,21 +65,33 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 	}
 
 	// 统计个数的方法
-	public Integer findCount(DetachedCriteria detachedCriteria) {
+	public Long findCount(T t1,T t2,Object param) {
 		// 设置统计个数的条件:
-		detachedCriteria.setProjection(Projections.rowCount());
-		List<Long> list = (List<Long>) this.getHibernateTemplate().findByCriteria(detachedCriteria);
-		if(list.size() > 0){
-			return list.get(0).intValue();
-		}
-		return null;
+		DetachedCriteria dc = getDetachedCriteria(t1,t2,param);
+		dc.setProjection(Projections.rowCount());
+		List<Long> list = (List<Long>)getHibernateTemplate().findByCriteria(dc);
+		return list.get(0);
 	}
 
 	
 	// 分页查询
-	public List<T> findByPage(DetachedCriteria detachedCriteria, Integer begin, Integer pageSize) {
-		detachedCriteria.setProjection(null);
-		return (List<T>) this.getHibernateTemplate().findByCriteria(detachedCriteria, begin, pageSize);
+	public List<T> findByPage(T t1,T t2,Object param, Integer begin, Integer pageSize) {
+		DetachedCriteria dc = getDetachedCriteria(t1,t2,param);
+		return (List<T>) this.getHibernateTemplate().findByCriteria(dc, begin, pageSize);
+	}
+	
+	//	条件查询
+	public List<T> getList(T t1, T t2, Object param) {
+		DetachedCriteria dc = getDetachedCriteria(t1,t2,param);
+		return (List<T>) this.getHibernateTemplate().findByCriteria(dc);
 	}
 
+	public List<T> getListByPage(T t1,T t2,Object param,int firstResult, int maxResults) {
+		DetachedCriteria dc = getDetachedCriteria(t1,t2,param);
+		return (List<T>) this.getHibernateTemplate().findByCriteria(dc,firstResult, maxResults);
+	}
+	
+	public DetachedCriteria getDetachedCriteria(T t1, T t2, Object param){
+		return null;
+	}
 }

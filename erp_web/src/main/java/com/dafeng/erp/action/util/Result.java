@@ -14,7 +14,7 @@ public class Result {
 	  
 	  private String msg = "";
 	  
-	  private int count;
+	  private Long count;
 	  
 	  private List data;
 
@@ -33,12 +33,13 @@ public class Result {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
+	
 
-	public int getCount() {
+	public Long getCount() {
 		return count;
 	}
 
-	public void setCount(int count) {
+	public void setCount(Long count) {
 		this.count = count;
 	}
 
@@ -48,7 +49,7 @@ public class Result {
 
 	public void setData(List data) {
 		this.data = data;
-		this.count=data.size();
+//		this.count=data.size();
 	}
 
 	  
